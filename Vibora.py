@@ -17,17 +17,45 @@ food = vector(0, 0)
 snake = [vector(10, 0)]
 aim = vector(0, -10)
 
+"""Variable where random number from 0 to 5 is stored"""
+random = randrange(0,4)
+"""Vector where the colors are declared"""
+color_list = ['black','green','blue','purple','orange']
+"""The snake will take the color depending on the position of the random"""
+color_snake = color_list[random]
+"""The color taken by random is removed so that it is not repeated"""
+color_list.pop(random)
+"""The new random value is stored"""
+random = randrange(0,3)
+"""The fruit will take the color depending on the position of the random"""
+color_fruit = color_list[random]
+
+
 
 def change(x, y):
     """Change snake direction."""
     aim.x = x
     aim.y = y
 
+def dibujo(x,y,size,name):
+    """We store our snake's positions in an array with 'X' and 'Y' coordinates and loop to move the snake forward."""
+    up()
+    goto(x,y)
+    down()
+    color(name)
+    begin_fill()
+
+    for i in range (4):
+        """by the value of the argument it takes, which depends on the length"""
+        forward(size)
+        """Change the viper's direction by 90 so it can only turn in those degrees"""
+        left(90)
+
+    end_fill()
 
 def inside(head):
     """Return True if head inside boundaries."""
     return -200 < head.x < 190 and -200 < head.y < 190
-
 
 def move():
     """Move snake forward one segment."""
@@ -51,9 +79,9 @@ def move():
     clear()
 
     for body in snake:
-        square(body.x, body.y, 9, 'black')
+        square(body.x, body.y, 9, color_snake)
 
-    square(food.x, food.y, 9, 'green')
+    square(food.x, food.y, 9, color_fruit)
     update()
     ontimer(move, 100)
 
